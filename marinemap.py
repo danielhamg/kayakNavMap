@@ -75,10 +75,6 @@ def predictNextLatLon(ship, nexTime):
     newLon = getLonShip(ship) + diffX
     newLat = getLatShip(ship) + diffY
     return [newLat, newLon] # in latitude, then longitude
-    
-    
-    
-print("banana")
 
 
 
