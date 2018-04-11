@@ -1,83 +1,84 @@
 ### 1: Getting relevant data ###
+# from math import *
+# from datetime import datetime *
 from math import *
 from datetime import datetime
+import time
 
 fields = {
-		"MMSI" : 0,
-		"IMO" : 1,
-		"SHIP_ID" : 2,
-		"LAT" : 3,
-		"LON" : 4,
-		"SPEED" : 5,
-		"HEADING" : 6,
-		"COURSE" : 7,
-		"STATUS" : 8,
-		"TIMESTAMP" : 9,
-		"DSRC" : 10,
-		"UTC_SECONDS" : 11
-	}
+    "MMSI" : 0,
+    "IMO" : 1,
+    "SHIP_ID" : 2,
+    "LAT" : 3,
+    "LON" : 4,
+    "SPEED" : 5,
+    "HEADING" : 6,
+    "COURSE" : 7,
+    "STATUS" : 8,
+    "TIMESTAMP" : 9,
+    "DSRC" : 10,
+    "UTC_SECONDS" : 11
+    }
 
 # ship is a list
 def getShipField(ship, item):
-		item = item.upper()
-		return ship[fields[item]]
+        item = item.upper()
+        return ship[fields[item]]
 
 def getLatShip(ship):
-		return int(getShipField(ship, "lat"))
+    return float(getShipField(ship, "lat"))
 
 # get a ship's longtitude
 def getLonShip(ship):
-	return int(getShipField(ship, "lon"))
+    return float(getShipField(ship, "lon"))
 
 # get a ship's heading
 def getHeadingShip(ship):
-	return int(getShipField(ship, "heading"))
+    return float(getShipField(ship, "heading"))
 
 def getSpeedShip(ship):
-	return int(getShipField(ship, "speed"))
-	
+    return float(getShipField(ship, "speed"))
 
-### functions for time conversion ###
-# given an array of time ()
-def timeDifferenceInSecs(before, after):
-	
-
-
+def getSpeedTimeStamp(ship):
+    return getShipField(ship, "timestamp")
 
 
 def timeStampCompress(stamp):
-	indexT = stamp.find('T')
-	return stamp[indexT + 1:]
+    indexT = stamp.find('T')
+    return stamp[indexT + 1:]
 
-# def timeStampToArray(stamp):
-# 	"""
-# 	given a timestamp like:
-# 		"2018-04-09T17:06:45"
-# 	turn it into:
-# 		[hr, 	min,	sec]
-# 		[17,	6,		45]
-# 	"""
+def timeDifferenceSeconds(before, after):
+    FMT = '%H:%M:%S'
+    return (datetime.strptime(after, FMT) - datetime.strptime(before, FMT)).total_seconds()
+    
+def knotsToMps(knots):
+    return knots / 0.51444444444
 
-# 	indexT = stamp.find('T')
-# 	if (indexT == -1):
-# 		return None
+def mtoCoor(m):
+    return m / 1852
 
-# 	# should be in form "17:06:45"
-# 	strTime = stamp[indexT + 1:]
-# 	hrs = int(strTime[:2])
-# 	mins = int(strTime[3:5])
-# 	sec = int(strTime[6:])
-
-# 	return [hrs, mins, sec]
-
-# def h(time):
-# 	return time[0]
-# def m(time):
-# 	return time[1]
-# def s(time):
-# 	return time[2]
+def getTimeShip(ship):
+#     print(timeStampCompress(getSpeedTimeStamp(ship)))
+    return timeStampCompress(getSpeedTimeStamp(ship))
 
 
+# latitude, longitude
+# up is increase in lat
+# right is increase in long
+def predictNextLatLon(ship, nexTime):
+    speedX = knotsToMps(cos(getSpeedShip(ship)))
+    speedY = knotsToMps(sin(getSpeedShip(ship)))
+#     print(getTimeShip(ship), " ", nexTime)
+    diffTime = timeDifferenceSeconds(getTimeShip(ship), nexTime)
+    diffX = mtoCoor(speedX * diffTime)    # should be in coor
+    diffY = mtoCoor(speedY * diffTime)    # should be in coor
+    newLon = getLonShip(ship) + diffX
+    newLat = getLatShip(ship) + diffY
+    return [newLat, newLon] # in latitude, then longitude
+    
+    
+    
+    
 
 
 
