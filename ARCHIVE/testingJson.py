@@ -30,7 +30,7 @@ class Ahmet:
 		self.allLat = []
 		self.allLon = []
 		self.recentHeading = 511
-		
+
 	# gets a ship item at index. Only for testing. Not too relevant
 	# will automatically transfer any input to uppercase, but spelling must be correct
 	def getShipField(self, index, item):
@@ -60,7 +60,7 @@ class Ahmet:
 	# Filter out ships that are away from Ahmet, and are going away from him anyways
 	def filterNonrelevant(self):
 		def upAndMovingAway(lat, heading):
-			return lat > self.lat and 
+			return lat > self.lat and
 		for ship in allShips:
 			if ((getLatShip > self.lat and (heading < 60)))
 
@@ -83,4 +83,3 @@ jsonObj = json.loads(file.text)
 ahmet = Ahmet(jsonObj, lat, lon)
 
 print(ahmet.getShipItem(1, "MMSI"))
-
