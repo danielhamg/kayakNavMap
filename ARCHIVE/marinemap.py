@@ -50,7 +50,7 @@ def timeStampCompress(stamp):
 def timeDifferenceSeconds(before, after):
     FMT = '%H:%M:%S'
     return (datetime.strptime(after, FMT) - datetime.strptime(before, FMT)).total_seconds()
-    
+
 def knotsToMps(knots):
     return knots / 0.51444444444
 
@@ -122,7 +122,7 @@ def getPredictedLon(ship, nexTime):
 		return None
 	if (quadrant == 4):
 		return None
-		
+
 
 
 
