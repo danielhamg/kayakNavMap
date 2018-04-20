@@ -1,6 +1,6 @@
 class Ships:
 
-        # Ship Fields: Corresponding to JSON file from Marine Traffic API
+    # Ship Fields: Corresponding to JSON file from Marine Traffic API
     fields = {
         "SHIP_ID" : 2,
 		"LAT" : 3,

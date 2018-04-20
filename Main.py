@@ -3,13 +3,15 @@ import time
 import json
 
 class Main:
-    def __init__:
+    def __init__():
         file = get("https://services.marinetraffic.com/api/exportvessels/v:8/2bede1ff947de189f635a8781c0d606b455f61b4/timespan:2/protocol:json")
-        file = SampleData_4_9__10-09am.txt # Sample data; not sure if syntax is correct
+        file = "SampleData_4_9__10-09am.txt" # Sample data; not sure if syntax is correct
         jsonObj = json.loads(file.text)
 
         self.currentShips = Ships(jsonObj)
-        self.currentAhmet = Ahmet(40, 40) # Arbitrary
+        self.Ahmet = Ahmet(40, 40) # Arbitrary
+
+        pastShips = []
 
 while true:
     # Phase 1: Data gathering
@@ -30,3 +32,7 @@ while true:
 
     # REPEAT: Delay for 5 minutes
     time.sleep(300)
+
+# predicting header for the ships
+# keep track of past ships
+# testing 
