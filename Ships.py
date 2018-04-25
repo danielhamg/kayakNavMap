@@ -1,47 +1,73 @@
 class Ships:
-
+    
     # Ship Fields: Corresponding to JSON file from Marine Traffic API
-    #################################
-    # Previously under Ships class. Now will be simplified to only take in a ship array
-    # and a desired field
-    ################################
     fields = {
-            "SHIP_ID" : 2,
-            "LAT" : 3,
-            "LON" : 4,
-            "SPEED" : 5,
-            "HEADING" : 6,
-            "COURSE" : 7,
-            "STATUS" : 8,
-            "TIMESTAMP" : 9,
-            "DSRC" : 10,
-            "UTC_SECONDS" : 11
-        }
+        "SHIP_ID" : 2,
+        "LAT" : 3,
+        "LON" : 4,
+        "SPEED" : 5,
+        "HEADING" : 6,
+        "COURSE" : 7,
+        "STATUS" : 8,
+        "TIMESTAMP" : 9,
+        "DSRC" : 10,
+        "UTC_SECONDS" : 11
+    }
 
-    def getShipField(ship, field):
+    # Constructor: takes in JSON file / array(?)
+    def __init__(self, file):
+        self.allShips = file
+        self.inRadius = []
+        self.gettingCLoser = []
+        self.within125 = []
+
+
+    ######################################################
+    ################## HELPER FUNCTIONS ##################
+    ######################################################
+    def getAllShips(self):
+        return self.allShips
+    
+    # returns a ship with a particular id in this timestep of ships
+    def getShipWithId(self, idnum):
+        for ship in self.getAllShips():
+            if self.getShipId(ship) == idnum:
+                return ship
+        return None
+
+        
+
+    # Gets the output of a particular ship's field; General helper function
+#     def getShipField(self, shipIndex, field):
+#         field = field.upper()
+#         return self.allShips[index][Ships.fields[field]]
+    
+    def getShipField(self, ship, field):
         field = field.upper()
-        return ship[fields[field]]
+        return ship[Ships.fields[field]]
 
     # Get a ship's ID
-    def getShipId(ship):
-        return int(getShipField(ship, "SHIP_ID"))
+    # def getShipId(self, shipIndex):
+        # return int(self.getShipField(shipIndex, "SHIP_ID"))
+    def getShipId(self, ship):
+            return int(self.getOneShipField(ship, "SHIP_ID"))
 
     # Get a ship's latitude
-    def getLatShip(ship):
-        return float(getShipField(ship, "LAT"))
+    def getLatShip(self, ship):
+        return int(self.getShipField(ship, "LAT"))
 
     # Get a ship's longtitude
-    def getLonShip(ship):
-        return float(getShipField(ship, "LON"))
+    def getLonShip(self, ship):
+        return int(self.getShipField(ship, "LON"))
 
     # Get a ship's heading
-    def getHeadingShip(ship):
-        return int(getShipField(ship, "HEADING"))
+    def getHeadingShip(self, ship):
+        return int(self.getShipField(ship, "HEADING"))
 
-    def getSpeedShip(ship):
+    def getSpeedShip(self, ship):
         return float(getShipField(ship, "SPEED"))
 
-    def getShipTimeStamp(ship):
+    def getTimeStamp(self, ship):
         return getShipField(ship, "TIMESTAMP")
 
     def timeStampCompress(stamp):
@@ -49,7 +75,7 @@ class Ships:
         return stamp[indexT + 1:]
 
     def getTimeShip(ship):
-        return timeStampCompress(getShipTimeStamp(ship))
+        return timeStampCompress(getSpeedTimeStamp(ship))
 
     def timeDifferenceSeconds(before, after):
         FMT = '%H:%M:%S'
