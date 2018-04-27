@@ -7,7 +7,6 @@ class Main:
         file = get("https://services.marinetraffic.com/api/exportvessels/v:8/2bede1ff947de189f635a8781c0d606b455f61b4/timespan:2/protocol:json")
         file = "SampleData_4_9__10-09am.txt" # Sample data; not sure if syntax is correct
         jsonObj = json.loads(file.text)
-        jsonObj = file
 
         self.currentShips = Ships(jsonObj)
         self.Ahmet = Ahmet(40, 40) # Arbitrary
@@ -36,4 +35,5 @@ while true:
 
 # predicting header for the ships
 # keep track of past ships
-# testing
+# testing 
+
